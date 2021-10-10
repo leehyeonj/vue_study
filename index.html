@@ -10,28 +10,25 @@
 </head>
 <body>
    <div id="app">
-       {{ nextYear("안녕하세요") }}
-       <input v-bind:type="type" :value="inputData">
+      {{ year }} <br>
+      <button v-on:click="plus">더하기</button>
+      <button v-on:click="minus">빼기</button>
    </div>
    <script>
        new Vue({
            el: '#app',
            data : {
-               person : {
-                name: 'lee',
-                age: 25
-               },
-               inputData : 'hello',
-               type : 'number'
+            year : 2021
               
            },
            methods : {
-               nextYear(greeting) {
-                   return greeting + "!" + this.person.name + "은 내년에" + (this.person.age + 1) + "살 입니다."
-               },
-               otherMethod : function () {
-                   this.nextYear()
-               }
+              plus(){
+                  this.year ++;
+              },
+              minus(){
+                  this.year --;
+              }
+
            } 
        })
    </script>
