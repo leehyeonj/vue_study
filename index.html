@@ -18,15 +18,15 @@
 </head>
 <body>
    <div id="app">
-      <div :class="{red : isRed, bold: isBold}">hello</div>
+      <div :style="{ color : red, fontSize: size}">hello</div>
       <button @click="update">click</button>
    </div>
    <script>
        new Vue({
            el: '#app',
            data : {
-            isRed : false,
-            isBold : false
+            red: 'red',
+            size: '30px'
            },
            methods : {
               update(){
