@@ -10,23 +10,34 @@
 </head>
 <body>
    <div id="app">
-        {{ reverseMessage }}
+       {{ message }} <br>
+        <button @click="changeMessage">Click</button>
+        {{ updated }}
      </form>
    </div>
    <script>
        new Vue({
            el: '#app',
            data : {
-            message : '나는나는현주야'
+            message : '나는나는현주야',
+            updated : '아니오'
               
            },
            methods : {
-              
+              changeMessage(){
+                  this.message = '이현주당당리구리구리'
+              }
 
            },
            computed : {
                reverseMessage(){
                    return this.message.split('').reverse().join('')
+               }
+           },
+           watch : {
+               message(newVal, oldVal){
+                 console.log(newVal, oldVal);
+                 this.updated = '네'
                }
            }
        })
