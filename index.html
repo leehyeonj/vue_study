@@ -5,29 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>뷰 기초 익히기</title>
+    <style>
+        .red {
+            color : red;
+        }
+        .bold {
+            font-weight: bold;
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
 </head>
 <body>
    <div id="app">
-       {{ message }} <br>
-        <button @click="changeMessage">Click</button>
-        {{ updated }}
-     </form>
+      <div :class="{red : isRed, bold: isBold}">hello</div>
+      <button @click="update">click</button>
    </div>
    <script>
        new Vue({
            el: '#app',
            data : {
-            message : '나는나는현주야',
-            updated : '아니오'
-              
+            isRed : false,
+            isBold : false
            },
            methods : {
-              changeMessage(){
-                  this.message = '이현주당당리구리구리'
+              update(){
+                  this.isRed = !this.isRed;
+                  this.isBold = !this.isBold;
               }
-
            },
            computed : {
                reverseMessage(){
