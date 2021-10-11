@@ -17,26 +17,30 @@
      <h-button></h-button>
 </div>
    <script>
-       Vue.component('h-button', {
-           template : `  
-           <div>
-                {{ name }} <br>
-                <button @click='changeText'>click</button>
-           </div>
-           `,
-        data() {
-            return {
-                name : '현주'
-            }
-           },
-           methods : {
-             changeText() {
-                this.name = "현주의 이름이라구"
-             }
-           }
-       })
+   
+       const HyeonjuBtn = {
+        template : `  
+        <div>
+             {{ name }} <br>
+             <button @click='changeText'>click</button>
+        </div>
+        `,
+     data() {
+         return {
+             name : '현주'
+         }
+        },
+        methods : {
+          changeText() {
+             this.name = "현주의 이름이라구"
+          }
+        }
+       }
        const app = new Vue({
            el: '#app',
+           components : {
+               'h-button' : HyeonjuBtn
+           }
          
           
        })
