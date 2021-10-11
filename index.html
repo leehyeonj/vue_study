@@ -11,19 +11,24 @@
 </head>
 <body>
    <div id="app">
-     <div v-if="show">Yes</div>
-     <div v-else>No</div>
+     <template v-if="number === 1">
+         <div>1</div>
+         <div>1</div>
+         <div>1</div>
+     </template>
+     <div v-else-if="number ===2">2</div>
+     <div v-else>no</div>
      <button @click='toggle'>click</button>
    </div>
    <script>
        new Vue({
            el: '#app',
            data : {
-            show: false
+            number: 1
            },
            methods : {
              toggle(){
-                 this.show = !this.show;
+                 this.number++;
              }
            },
            computed : {
