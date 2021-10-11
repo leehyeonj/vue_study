@@ -11,25 +11,38 @@
 </head>
 <body>
    <div id="app">
-    <div v-for="(person, index) in people" :key="person.name + '-' + person.age">
-        {{ person.name }} {{ person.age}} {{ index}}
-    </div>
+       {{ name }} <br>
+        <button @click='changeText'>click</button>
    </div>
+   <div id="app1">
+    {{ name }} <br>
+     <button @click='changeText'>click</button>
+</div>
    <script>
-       new Vue({
+       const app = new Vue({
            el: '#app',
            data : {
-            people : [
-                {name: 'a', age: 20},
-                {name: 'b', age: 21},
-                {name: 'c', age: 22},
-            ]
+            name: "현주"
            },
            methods : {
-            
+             changeText() {
+                app1.name = "현주쓰의 이름이라구"
+             }
            }
           
        })
+       const app1 = new Vue({
+        el: '#app1',
+        data : {
+         name: "현주쓰"
+        },
+        methods : {
+          changeText() {
+            app.name = "현주의 이름이라구"
+          }
+        }
+       
+    })
    </script>
 </body>
 </html>
