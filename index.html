@@ -11,32 +11,24 @@
 </head>
 <body>
    <div id="app">
-     <template v-if="number === 1">
-         <div>1</div>
-         <div>1</div>
-         <div>1</div>
-     </template>
-     <div v-else-if="number ===2">2</div>
-     <div v-else>no</div>
-     <button @click='toggle'>click</button>
+    <div v-for="person in people">
+        {{ person.name }} {{ person.age}}
+    </div>
    </div>
    <script>
        new Vue({
            el: '#app',
            data : {
-            number: 1
+            people : [
+                {name: 'a', age: 20},
+                {name: 'b', age: 21},
+                {name: 'c', age: 22},
+            ]
            },
            methods : {
-             toggle(){
-                 this.number++;
-             }
-           },
-           computed : {
-             
-           },
-           watch : {
-               
+            
            }
+          
        })
    </script>
 </body>
