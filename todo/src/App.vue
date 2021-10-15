@@ -14,9 +14,9 @@
   :key="todo.id" 
   :todo="todo"
   @toggle-checkbox="toggleCheckbox"
+  @click-delete="deleteTodo"
   />
-   <Todo/>
-    <Todo/>
+   
   </div>
 </template>
 
@@ -51,6 +51,13 @@ export default {
          return todo.id === id;
        })
        this.todos[idx].checked = checked;
+    },
+    deleteTodo(id) {
+      // const idx = this.todos.findIndex(todo=> {
+      //    return todo.id === id;
+      //  })
+      //  this.todos.splice(idx,1);
+      this.todos = this.todos.filter(todo => todo.id !== id)
     }
   }
 }
