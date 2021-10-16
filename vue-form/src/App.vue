@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form v-on:submit="submitForm">
+    <form v-on:submit.prevent="submitForm">
       <div>
         <label for="username">Id:</label>
         <input id="username" type="text" v-model="username">
@@ -23,9 +23,13 @@ export default {
     }
   },
   methods : {
-    submitForm(event) {
-      event.preventDefault()
+    submitForm() {
       console.log('submitted')
+      this.initForm()
+    },
+    initForm() {
+      this.username = '';
+      this.password = '';
     }
   }
 }
