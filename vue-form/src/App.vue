@@ -11,6 +11,7 @@
       </div>
       <button type="submit">로그인</button>
     </form>
+    <p v-if="isError">올바르지 않은 id입니다.</p>
   </div>
 </template>
 
@@ -20,11 +21,13 @@ export default {
     return {
       username : "",
       password : "",
+      isError : false,
     }
   },
   methods : {
     submitForm() {
       console.log('submitted')
+      this.isError = true;
       this.initForm()
     },
     initForm() {
