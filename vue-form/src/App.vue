@@ -3,7 +3,10 @@
     <form v-on:submit.prevent="submitForm">
       <div>
         <label for="username">Id:</label>
-        <input id="username" type="text" v-model="username">
+        <input id="username" type="text" v-model="username" 
+        class="username-input"
+        v-bind:class ="{'error' : isError}"
+        >
       </div>
       <div>
         <label for="password">pw: </label>
@@ -42,7 +45,7 @@ export default {
     submitForm() {
       console.log('submitted')
       this.isError = true;
-      this.initForm()
+      // this.initForm()
     },
     initForm() {
       this.username = '';
@@ -52,6 +55,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+/* 현재 컴포넌트에만 적용되는 scoped */
+.username-input {
+  outline: none;
+}
+.username-input.error {
+  border: 1px solid red;
+}
 </style>
