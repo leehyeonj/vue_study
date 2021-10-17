@@ -9,19 +9,33 @@
         <label for="password">pw: </label>
         <input id="password" type="password" v-model="password">
       </div>
-      <button type="submit">로그인</button>
+      <button v-bind:disabled="!isUsernameValid" type="submit">로그인</button>
     </form>
     <p v-if="isError">올바르지 않은 id입니다.</p>
+    <p v-if="isUsernameValid">아이디가 이메일 형식이 맞습니다. </p>
   </div>
 </template>
 
 <script>
+//이메일 형식 체크 함수
+function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
 export default {
   data(){
     return {
       username : "",
       password : "",
       isError : false,
+    }
+  },
+  //변화되었을 때 자동으로 계산
+  computed: {
+    isUsernameValid(){  
+      return validateEmail(this.username)
+
     }
   },
   methods : {
