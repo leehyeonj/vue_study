@@ -37,24 +37,37 @@ export default {
  setup(){
    const todos = ref([]);
    const error = ref('');
+
+   const getTodos = async ()=>{
+     try{
+       const res = await axios.get('http://localhost:3000/todos');
+       todos.value = res.data;
+       console.log(res)
+     }catch(err){
+       console.log(err)
+     }
+   }
+   getTodos();
+
    const todoStyle = {
      textDecoration: 'line-through',
      color: 'gray'
    }
  
-   const addTodo = (todo)=>{
+   const addTodo = async (todo)=>{
      //디비에 저장
-     axios.post('http://localhost:3000/todos', {
+     error.value = ''
+     try {
+       const res = await axios.post('http://localhost:3000/todos', {
        subject : todo.subject,
        completed : todo.completed
-     }).then(res => {
-       todos.value.push(res.data)
-       console.log(res)
-     }).catch(err => {
-       console.log(err)
-       error.value = "Somethins went wrong";
      })
-     
+      todos.value.push(res.data)
+     }
+     catch(err){
+       console.log(err)
+       error.value = 'something went wrong'
+     }
  
    }
 
@@ -81,6 +94,7 @@ export default {
      todos,
      error,
      addTodo,
+     getTodos,
      todoStyle,
      deleteTodo,
      toggleTodo,
