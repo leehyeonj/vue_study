@@ -1,26 +1,26 @@
 <template>
 <div class="container">
   <h1>TO DO LIST</h1>
-  <form 
-  @submit.prevent="onSubmit" 
-  class="d-flex">
+  <form @submit.prevent="onSubmit" >
+  <div  class="d-flex">
     <div class="flex-grow-1 mr-2">
-      <input 
-      class="form-control"
-      type="text" 
-      v-model="todo"
-      placeholder="type new todo"
-      >
+        <input 
+        class="form-control"
+        type="text" 
+        v-model="todo"
+        placeholder="type new todo"
+        >
     </div>
       <div>
-      <button 
-      class="btn btn-primary"
-      type="submit"
-      >add
-      </button>
+        <button 
+        class="btn btn-primary"
+        type="submit"
+        >add
+        </button>
       </div>
+  </div>
+    <div v-show="hasError" style="color:red">아무것도 적지 않았군</div>
   </form>
-{{todos}}
   <div 
   class="card mt-2" 
   v-for="todo in todos" 
@@ -41,18 +41,28 @@ export default {
    const todos = ref([
      {id: 1, subject : '휴대폰 사기'}
    ]);
+   const hasError = ref(false);
  
    const onSubmit = (e)=>{
-     e.preventDefault();
-     todos.value.push({
-       id: Date.now(),
-       subject : todo.value
-     })
+     if(todo.value === ''){
+       hasError.value = true;
+     }
+     else{
+        e.preventDefault();
+        todos.value.push({
+          id: Date.now(),
+          subject : todo.value
+        })
+        hasError.value = false;
+        todo.value = ''
+     }
+ 
    }
    return{
      todo,
      todos,
-     onSubmit
+     onSubmit,
+     hasError
    }
  }
 };
