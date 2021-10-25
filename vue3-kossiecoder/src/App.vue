@@ -8,7 +8,7 @@
       <input 
       class="form-control"
       type="text" 
-      v-model="name"
+      v-model="todo"
       placeholder="type new todo"
       >
     </div>
@@ -20,7 +20,15 @@
       </button>
       </div>
   </form>
- {{todos}}
+{{todos}}
+  <div 
+  class="card mt-2" 
+  v-for="todo in todos" 
+  :key="todo.id">
+    <div class="card-body p-2">
+      {{ todo.subject}}
+    </div>
+  </div>
 </div>
 
 </template>
@@ -30,7 +38,9 @@ import {ref} from 'vue'
 export default {
  setup(){
    const todo = ref('');
-   const todos = ref([]);
+   const todos = ref([
+     {id: 1, subject : '휴대폰 사기'}
+   ]);
  
    const onSubmit = (e)=>{
      e.preventDefault();
