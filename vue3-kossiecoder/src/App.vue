@@ -22,12 +22,12 @@
     <div v-show="hasError" style="color:red">아무것도 적지 않았군</div>
   </form>
   <div 
-  class="card mt-2" 
-  v-for="todo in todos" 
-  :key="todo.id">
+    class="card mt-2" 
+    v-for="(todo,index) in todos" 
+    :key="todo.id">
 
-    <div class="card-body p-2">
-      <div class="form-check">
+    <div class="card-body p-2 d-flex align-items-center">
+      <div class="form-check flex-grow-1">
         <input type="checkbox"
         class="form-check-input"
         v-model="todo.completed"
@@ -38,7 +38,12 @@
           {{ todo.subject}}
         </label>
       </div>
-      
+      <div>
+        <button 
+        class="btn btn-danger btn-sm"
+        @click="deleteTodo(index)"
+        >delete</button>
+      </div>
     </div>
   </div>
 </div>
@@ -73,12 +78,17 @@ export default {
      }
  
    }
+
+   const deleteTodo = (index) =>{
+     todos.value.splice(index, 1)
+   }
    return{
      todo,
      todos,
      onSubmit,
      hasError,
-     todoStyle
+     todoStyle,
+     deleteTodo
    }
  }
 };
