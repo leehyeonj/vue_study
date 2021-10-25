@@ -32,7 +32,9 @@
         class="form-check-input"
         v-model="todo.completed"
         >
-        <label class="form-check-label">
+        <label class="form-check-label"
+        :class="{todo: todo.completed}"
+        >
           {{ todo.subject}}
         </label>
       </div>
@@ -50,6 +52,10 @@ export default {
    const todo = ref('');
    const todos = ref([ ]);
    const hasError = ref(false);
+   const todoStyle = {
+     textDecoration: 'line-through',
+     color: 'gray'
+   }
  
    const onSubmit = (e)=>{
      if(todo.value === ''){
@@ -71,18 +77,17 @@ export default {
      todo,
      todos,
      onSubmit,
-     hasError
+     hasError,
+     todoStyle
    }
  }
 };
 </script>
 
 <style>
-.name {
-  color: red;
-}
-.green{
-  color : green;
+.todo {
+  color: gray;
+  text-decoration: line-through;
 }
 
 </style>
