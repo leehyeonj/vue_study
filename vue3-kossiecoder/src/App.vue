@@ -5,31 +5,7 @@
   <div v-if="!todos.length">
     추가된 todo가 없습니다.
   </div>
-  <div 
-    class="card mt-2" 
-    v-for="(todo,index) in todos" 
-    :key="todo.id">
-
-    <div class="card-body p-2 d-flex align-items-center">
-      <div class="form-check flex-grow-1">
-        <input type="checkbox"
-        class="form-check-input"
-        v-model="todo.completed"
-        >
-        <label class="form-check-label"
-        :class="{todo: todo.completed}"
-        >
-          {{ todo.subject}}
-        </label>
-      </div>
-      <div>
-        <button 
-        class="btn btn-danger btn-sm"
-        @click="deleteTodo(index)"
-        >delete</button>
-      </div>
-    </div>
-  </div>
+  <TodoList :todos="todos"/>
 </div>
 
 </template>
@@ -37,15 +13,17 @@
 <script>
 import {ref} from 'vue'
 import TodoSimpleForm from "./components/TodoSimpleForm.vue";
+import TodoList from "./components/TodoList.vue"
 
 
 export default {
   components : {
-    TodoSimpleForm
+    TodoSimpleForm,
+    TodoList
   },
 
  setup(){
-   const todos = ref([ ]);
+   const todos = ref([]);
    const todoStyle = {
      textDecoration: 'line-through',
      color: 'gray'
