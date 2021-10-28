@@ -38,7 +38,7 @@
 
 <script>
 import { useRoute, useRouter } from "vue-router";
-import axios from "axios";
+import axios from "@/axios.js";
 import { ref, computed } from "vue";
 import _ from "lodash";
 import Toast from "@/components/Toast.vue";
@@ -59,7 +59,7 @@ export default {
     const getTodo = async () => {
       try {
         const res = await axios.get(`
-              http://localhost:3000/todos/${todoId}
+              /todos/${todoId}
             `);
         todo.value = { ...res.data };
         originalTodo.value = { ...res.data };
@@ -86,7 +86,7 @@ export default {
       try {
         const res = await axios.put(
           `
-              http://localhost:3000/todos/${todoId}
+              /todos/${todoId}
             `,
           {
             subject: todo.value.subject,
