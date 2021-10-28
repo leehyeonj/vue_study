@@ -43,6 +43,14 @@ import axios from "axios";
 import { ref, computed } from "@vue/reactivity";
 import _ from "lodash";
 import Toast from "../../components/Toast.vue";
+import {
+  onBeforeMount,
+  onBeforeUnmount,
+  onBeforeUpdate,
+  onMounted,
+  onUnmounted,
+  onUpdated,
+} from "@vue/runtime-core";
 
 export default {
   components: {
@@ -50,6 +58,27 @@ export default {
   },
 
   setup() {
+    onBeforeMount(() => {
+      //dom 에 접근할 수 없음
+    }),
+      onMounted(() => {
+        //마운트가 된 다음에
+      });
+    onBeforeUpdate(() => {
+      //before update
+    });
+    onUpdated(() => {
+      //updated된 다음에
+      //state 가 바뀔떄마다 하고 싶으면 여기다 써라
+    });
+    onBeforeUnmount(() => {
+      //dom에서 사라지기 전에
+    });
+    onUnmounted(() => {
+      //dom 에서 사라지고 난 후에
+      //메모리 누수를 방지하기 위해 여기서 많이 쓴다.
+    });
+
     const route = useRoute(); //params id 가져오기
     const router = useRouter();
     const todo = ref(null);
@@ -59,6 +88,11 @@ export default {
     const toastMessage = ref("");
     const toastAlertType = ref("");
     const todoId = route.params.id;
+    const timeout = ref(null);
+
+    onUnmounted(() => {
+      clearTimeout(timeout.value);
+    });
 
     //한개의 todo 데이터 가져오기
     const getTodo = async () => {
@@ -89,14 +123,16 @@ export default {
       });
     };
 
+    //toast카드 나타내기
     const triggerToast = (message, type = "success") => {
       toastMessage.value = message;
       toastAlertType.value = type;
       showToast.value = true;
-      setTimeout(() => {
+      timeout.value = setTimeout(() => {
         toastMessage.value = "";
+        toastAlertType.value = "";
         showToast.value = false;
-      }, 1000);
+      }, 5000);
     };
     //저장하기
     const onSave = async () => {
