@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import TodoSimpleForm from "./components/TodoSimpleForm.vue";
 import TodoList from "./components/TodoList.vue";
 import axios from "axios";
@@ -53,8 +53,14 @@ export default {
     const todos = ref([]);
     const error = ref("");
     const numberOfTodos = ref(0);
-    const limit = 5;
+    const limit = 10;
     const currentPage = ref(1);
+
+    //값이 변경이 되면 이 함수가 다시 실행이 된다.
+    //reactive 한 state 에만 적용이 된다.
+    watchEffect(() => {
+      console.log(currentPage.value);
+    });
 
     const numberOfPages = computed(() => {
       return Math.ceil(numberOfTodos.value / limit);
