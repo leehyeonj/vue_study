@@ -26,7 +26,9 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-2">Save</button>
+    <button type="submit" class="btn btn-primary mt-2" :disabled="!todoUpdated">
+      Save
+    </button>
     <button class="btn btn-outline-dark ml-2 mt-2" @click="moveToTodoListPage">
       Cancel
     </button>
@@ -37,21 +39,29 @@
 <script>
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-import { ref } from "@vue/reactivity";
+import { ref, computed } from "@vue/reactivity";
+import _ from "lodash";
 export default {
   setup() {
     const route = useRoute(); //params id 가져오기
     const router = useRouter();
     const todo = ref(null);
+    const originalTodo = ref(null);
     const loading = ref(true);
     const todoId = route.params.id;
 
     //한개의 todo 데이터 가져오기
     const getTodo = async () => {
       const res = await axios.get("http://localhost:3000/todos/" + todoId);
-      todo.value = res.data;
+      originalTodo.value = { ...res.data };
+      todo.value = { ...res.data };
       loading.value = false;
     };
+
+    //바뀐 내용이 없으면 save 버튼을 disable 로 바꾸겠다.
+    const todoUpdated = computed(() => {
+      return !_.isEqual(todo.value, originalTodo.value);
+    });
 
     //상세 페이지에서 토글하기
     const toggleTodoStatus = () => {
@@ -71,7 +81,7 @@ export default {
         subject: todo.value.subject,
         completed: todo.value.completed,
       });
-      console.log(res);
+      originalTodo.value = { ...res.data };
     };
     getTodo();
 
@@ -82,6 +92,7 @@ export default {
       toggleTodoStatus,
       moveToTodoListPage,
       onSave,
+      todoUpdated,
     };
   },
 };

@@ -10,8 +10,10 @@
   "dependencies": {
     "axios": "^0.23.0",
     "core-js": "^3.6.5",
+    "lodash": "^4.17.21",
     "vue": "^3.0.0",
     "vue-loader-v16": "^16.0.0-beta.5.4",
+    "vue-lodash": "^2.1.2",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
