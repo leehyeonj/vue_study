@@ -1,6 +1,5 @@
 <template>
-  <router-view />
-  <div class="container">
+  <div>
     <h2>To-Do List</h2>
     <input
       class="form-control"
@@ -55,6 +54,7 @@
       </ul>
     </nav>
   </div>
+  <Toast v-if="showToast" :message="toastMessage" :type="toastAlertType" />
 </template>
 
 <script>
@@ -62,21 +62,26 @@ import { ref, computed, watch } from "vue";
 import TodoSimpleForm from "@/components/TodoSimpleForm.vue";
 import TodoList from "@/components/TodoList.vue";
 import axios from "axios";
+import Toast from "@/components/Toast.vue";
+import { useToast } from "@/hooks/toast";
 export default {
   components: {
     TodoSimpleForm,
     TodoList,
+    Toast,
   },
   setup() {
     const todos = ref([]);
     const error = ref("");
     const numberOfTodos = ref(0);
-    let limit = 10;
+    let limit = 5;
     const currentPage = ref(1);
     const searchText = ref("");
     const numberOfPages = computed(() => {
       return Math.ceil(numberOfTodos.value / limit);
     });
+    const { toastMessage, toastAlertType, showToast, triggerToast } =
+      useToast();
     const getTodos = async (page = currentPage.value) => {
       currentPage.value = page;
       try {
@@ -88,6 +93,7 @@ export default {
       } catch (err) {
         console.log(err);
         error.value = "Something went wrong.";
+        triggerToast("Something went wrong", "danger");
       }
     };
     getTodos();
@@ -103,6 +109,7 @@ export default {
       } catch (err) {
         console.log(err);
         error.value = "Something went wrong.";
+        triggerToast("Something went wrong", "danger");
       }
     };
     const deleteTodo = async (index) => {
@@ -115,6 +122,7 @@ export default {
       } catch (err) {
         console.log(err);
         error.value = "Something went wrong.";
+        triggerToast("Something went wrong", "danger");
       }
     };
     const toggleTodo = async (index, checked) => {
@@ -128,6 +136,7 @@ export default {
       } catch (err) {
         console.log(err);
         error.value = "Something went wrong.";
+        triggerToast("Something went wrong", "danger");
       }
     };
     let timeout = null;
@@ -152,6 +161,9 @@ export default {
       numberOfPages,
       currentPage,
       getTodos,
+      toastMessage,
+      toastAlertType,
+      showToast,
     };
   },
 };
