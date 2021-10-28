@@ -37,11 +37,11 @@
     },
     {
       "subject": "45~52",
-      "completed": false,
+      "completed": true,
       "id": 8
     },
     {
-      "subject": "53~61",
+      "subject": "54~61",
       "completed": false,
       "id": 9
     },
@@ -57,13 +57,13 @@
     },
     {
       "subject": "json sever , api",
-      "completed": true,
+      "completed": false,
       "id": 12
     },
     {
-      "subject": "ㅎㅇㅁㄹㅇㅁㄹㅇㄹㅁㅇdd",
+      "subject": "53",
       "completed": false,
-      "id": 13
+      "id": 14
     }
   ]
 }

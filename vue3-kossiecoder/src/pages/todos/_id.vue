@@ -33,6 +33,7 @@
       Cancel
     </button>
   </form>
+  <Toast v-if="showToast" :message="toastMessage" :type="toastAlertType" />
 </template>
 
 
@@ -41,21 +42,34 @@ import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import { ref, computed } from "@vue/reactivity";
 import _ from "lodash";
+import Toast from "../../components/Toast.vue";
+
 export default {
+  components: {
+    Toast,
+  },
+
   setup() {
     const route = useRoute(); //params id 가져오기
     const router = useRouter();
     const todo = ref(null);
     const originalTodo = ref(null);
     const loading = ref(true);
+    const showToast = ref(true);
+    const toastMessage = ref("");
+    const toastAlertType = ref("");
     const todoId = route.params.id;
 
     //한개의 todo 데이터 가져오기
     const getTodo = async () => {
-      const res = await axios.get("http://localhost:3000/todos/" + todoId);
-      originalTodo.value = { ...res.data };
-      todo.value = { ...res.data };
-      loading.value = false;
+      try {
+        const res = await axios.get("http://localhost:3000/todos/" + todoId);
+        originalTodo.value = { ...res.data };
+        todo.value = { ...res.data };
+        loading.value = false;
+      } catch (err) {
+        triggerToast("something went wrong!", "danger");
+      }
     };
 
     //바뀐 내용이 없으면 save 버튼을 disable 로 바꾸겠다.
@@ -75,13 +89,27 @@ export default {
       });
     };
 
+    const triggerToast = (message, type = "success") => {
+      toastMessage.value = message;
+      toastAlertType.value = type;
+      showToast.value = true;
+      setTimeout(() => {
+        toastMessage.value = "";
+        showToast.value = false;
+      }, 1000);
+    };
     //저장하기
     const onSave = async () => {
-      const res = await axios.put(`http://localhost:3000/todos/${todoId}`, {
-        subject: todo.value.subject,
-        completed: todo.value.completed,
-      });
-      originalTodo.value = { ...res.data };
+      try {
+        const res = await axios.put(`http://localhost:3000/todos/${todoId}`, {
+          subject: todo.value.subject,
+          completed: todo.value.completed,
+        });
+        originalTodo.value = { ...res.data };
+        triggerToast("successfully saved!");
+      } catch (err) {
+        triggerToast("something went wrong!", "danger");
+      }
     };
     getTodo();
 
@@ -93,6 +121,9 @@ export default {
       moveToTodoListPage,
       onSave,
       todoUpdated,
+      showToast,
+      toastMessage,
+      toastAlertType,
     };
   },
 };
