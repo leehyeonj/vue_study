@@ -27,33 +27,13 @@
     },
     {
       "subject": "아이콘",
-      "completed": false,
+      "completed": true,
       "id": 6
     },
     {
       "subject": "메인페이지 필터 뷰 만들기",
-      "completed": false,
+      "completed": true,
       "id": 7
-    },
-    {
-      "subject": "vue3 45 ~ 52 ",
-      "completed": false,
-      "id": 9
-    },
-    {
-      "subject": "53~63",
-      "completed": false,
-      "id": 10
-    },
-    {
-      "subject": "64~73",
-      "completed": false,
-      "id": 11
-    },
-    {
-      "subject": "74~83",
-      "completed": false,
-      "id": 12
     }
   ]
 }
