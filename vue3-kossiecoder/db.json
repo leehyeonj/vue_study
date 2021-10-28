@@ -27,13 +27,43 @@
     },
     {
       "subject": "아이콘",
-      "completed": true,
+      "completed": false,
       "id": 6
     },
     {
       "subject": "메인페이지 필터 뷰 만들기",
-      "completed": true,
+      "completed": false,
       "id": 7
+    },
+    {
+      "subject": "45~52",
+      "completed": false,
+      "id": 8
+    },
+    {
+      "subject": "53~61",
+      "completed": false,
+      "id": 9
+    },
+    {
+      "subject": "62~ 73",
+      "completed": false,
+      "id": 10
+    },
+    {
+      "subject": "74~ 83",
+      "completed": false,
+      "id": 11
+    },
+    {
+      "subject": "json sever , api",
+      "completed": true,
+      "id": 12
+    },
+    {
+      "subject": "ㅎㅇㅁㄹㅇㅁㄹㅇㄹㅁㅇ",
+      "completed": false,
+      "id": 13
     }
   ]
 }
