@@ -6,6 +6,7 @@
       type="text"
       v-model="searchText"
       placeholder="Search"
+      @keyup.enter="searchEnter"
     />
     <hr />
     <TodoSimpleForm @add-todo="addTodo" />
@@ -139,14 +140,23 @@ export default {
       }
     };
 
+    let timeout = null;
+    const searchEnter = () => {
+      clearTimeout(timeout);
+      getTodos(1);
+    };
     //search 함수. 검색을 할 때 마다 항상 1페이지를 보여준다.
     watch(searchText, () => {
-      getTodos(1);
+      clearTimeout(timeout); //타이머를 클리어 해준다
+      timeout = setTimeout(() => {
+        getTodos(1);
+      }, 200);
     });
 
     //return
     return {
       todos,
+      searchEnter,
       addTodo,
       deleteTodo,
       toggleTodo,
