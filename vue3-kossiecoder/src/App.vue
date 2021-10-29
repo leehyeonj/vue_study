@@ -11,9 +11,9 @@
     <TodoSimpleForm @add-todo="addTodo" />
     <div style="color: red">{{ error }}</div>
 
-    <div v-if="!filteredTodos.length">There is nothing to display</div>
+    <div v-if="!todos.length">There is nothing to display</div>
     <TodoList
-      :todos="filteredTodos"
+      :todos="todos"
       @toggle-todo="toggleTodo"
       @delete-todo="deleteTodo"
     />
@@ -71,14 +71,7 @@ export default {
     const numberOfTodos = ref(0);
     let limit = 5;
     const currentPage = ref(1);
-    watch([currentPage, numberOfTodos], (currentPage, prev) => {
-      //감지를 하고 있다가 변화가 되면 실행되는 코드
-      console.log(currentPage, prev);
-    });
-    // watchEffect((currentPage,) => {
-    //   console.log(limit);
-    // });
-    limit = 3; //watchEffect가 실행되지 않음, reactive한 값이 아니기 때문이다.
+    const searchText = ref("");
 
     //page number
     const numberOfPages = computed(() => {
@@ -90,7 +83,7 @@ export default {
       currentPage.value = page;
       try {
         const res = await axios.get(
-          `http://localhost:3000/todos?_page=${page}&_limit=${limit}`
+          `http://localhost:3000/todos?subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
         );
         numberOfTodos.value = res.headers["x-total-count"];
         todos.value = res.data;
@@ -146,15 +139,9 @@ export default {
       }
     };
 
-    //search
-    const searchText = ref("");
-    const filteredTodos = computed(() => {
-      if (searchText.value) {
-        return todos.value.filter((todo) => {
-          return todo.subject.includes(searchText.value);
-        });
-      }
-      return todos.value;
+    //search 함수. 검색을 할 때 마다 항상 1페이지를 보여준다.
+    watch(searchText, () => {
+      getTodos(1);
     });
 
     //return
@@ -164,7 +151,7 @@ export default {
       deleteTodo,
       toggleTodo,
       searchText,
-      filteredTodos,
+
       error,
       numberOfPages,
       currentPage,
