@@ -6,15 +6,21 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  props: ["item"],
+  props: {
+    item: {
+      type: String,
+      required: true,
+    },
+  },
   components: {},
   methods: {
-    handleInput(event) {
-      //   event.target.value;
-      this.$emit("input", event.target.value);
+    handleInput(event: InputEvent) {
+      console.log(event);
+      const eventTarget = event.target as HTMLInputElement;
+      this.$emit("input", eventTarget);
     },
     addTodo() {
       this.$emit("add");
