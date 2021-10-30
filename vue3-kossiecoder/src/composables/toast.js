@@ -4,6 +4,7 @@ export const useToast = () => {
     const toastAlertType = ref('');
     const showToast = ref(false); 
     const timeout = ref(null);
+    //toggle 토스트
     const triggerToast = (message, type = 'success') => {
           toastMessage.value = message;
           toastAlertType.value = type;

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h2>To-Do List</h2>
+    <div class="d-flex justify-content-between mb-3">
+      <h2>To-Do List</h2>
+      <button class="btn btn-primary">Create plan</button>
+    </div>
     <input
       class="form-control"
       type="text"
@@ -61,9 +64,9 @@
 import { ref, computed, watch } from "vue";
 import TodoSimpleForm from "@/components/TodoSimpleForm.vue";
 import TodoList from "@/components/TodoList.vue";
-import axios from "@/axios.js";
+import axios from "axios";
 import Toast from "@/components/Toast.vue";
-import { useToast } from "@/hooks/toast";
+import { useToast } from "@/composables/toast";
 export default {
   components: {
     TodoSimpleForm,
@@ -86,7 +89,7 @@ export default {
       currentPage.value = page;
       try {
         const res = await axios.get(
-          `/todos?_sort=id&_order=desc&subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
+          `http://localhost:3000/todos?_sort=id&_order=desc&subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
         );
         numberOfTodos.value = res.headers["x-total-count"];
         todos.value = res.data;
@@ -101,7 +104,7 @@ export default {
       // 데이터베이스 투두를 저장
       error.value = "";
       try {
-        await axios.post("/todos", {
+        await axios.post("http://localhost:3000/todos", {
           subject: todo.subject,
           completed: todo.completed,
         });
@@ -116,7 +119,7 @@ export default {
       error.value = "";
       const id = todos.value[index].id;
       try {
-        await axios.delete("/todos/" + id);
+        await axios.delete("http://localhost:3000/todos/" + id);
 
         getTodos(1);
       } catch (err) {
@@ -129,7 +132,7 @@ export default {
       error.value = "";
       const id = todos.value[index].id;
       try {
-        await axios.patch("/todos/" + id, {
+        await axios.patch("http://localhost:3000/todos/" + id, {
           completed: checked,
         });
         todos.value[index].completed = checked;
