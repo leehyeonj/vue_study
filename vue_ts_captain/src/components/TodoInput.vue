@@ -19,7 +19,8 @@ export default Vue.extend({
   methods: {
     handleInput(event: InputEvent) {
       const eventTarget = event.target as HTMLInputElement;
-      this.$emit("input", eventTarget);
+      this.$emit("input", eventTarget.value);
+      console.log(eventTarget);
     },
     addTodo() {
       this.$emit("add");

@@ -49,7 +49,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    updatTodoText(value: string) {
+    updateTodoText(value: string) {
       this.todoText = value;
     },
     addTodoItem() {
